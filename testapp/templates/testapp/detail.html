@@ -1,0 +1,28 @@
+<ul>
+    <li>{{ question.question_text }}</li>
+</ul>
+
+<ol>
+    {% for choice in question.choice_set.all %}
+    <li>{{choice.choice_text}}</li>
+    {% endfor %}
+</ol>
+
+
+<form action="{% url 'testapp:vote' question.id %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>{{question.question_text}}</h1></legend>
+        {% if error_message %}
+            <p><strong>{{error_message}}</strong></p>
+        {% endif %}
+        {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{choice.id}}" value="{{choice.id}}">
+            <label for="choice{{forloop.counter}}">{{choice.choice_text}}</label>
+            <br>
+        {% endfor %}
+    </fieldset>
+    <input type="submit" value="Vote">
+</form>
+<br>
+To browse different questions, <a href="{% url 'testapp:index' %}">click here</a>

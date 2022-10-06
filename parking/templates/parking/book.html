@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if message %}
+        {{message}}
+    {% else %}
+    Booking address : {{parking_space.parking_address}}<br>
+    <form action="{% url 'parking:confirmation' parking_space.parking_address %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h1>Is the payment confirmed?</h1></legend>
+            
+                <input type="radio" name="is_confirmed" id="Yes" value="Yes">
+                <label for="Yes">Yes</label>
+                <br>
+                <input type="radio" name="is_confirmed" id="No" value="No">
+                <label for="No">No</label>
+                <br>
+                <input type="text" name="vehicle_id" id="vehicle_id">
+                <label for="vehicle_id">Enter vehicle ID</label>
+        </fieldset>
+        <input type="submit" value="submit">
+    </form>
+    {% endif %}
+    <br>
+    <a href="{% url 'parking:book' %}">Book another</a>
+</body>
+</html>
